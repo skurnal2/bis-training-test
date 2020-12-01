@@ -16,3 +16,26 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.users-list {
+  margin: 2rem;  
+  border: 1px solid rgba(61, 61, 61, 0.479);
+  border-radius: 5px;
+}
+
+td {
+  padding: 1rem;
+}
+
+.modal-dialog {
+  max-width: 80% !important;
+}
+
+.loader-gif {
+  position: absolute;
+  height: 10%;
+  width: 10%;
+  left: 50%;
+  top: 50%; 
+  transform: translateX(-50%) translateY(-50%);   
+}
