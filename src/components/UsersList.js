@@ -32,7 +32,7 @@ const UsersList = ({ usersApiData, setUsersApiData }) => {
                         <th>Address</th>
                         <th>Phone</th>
                         <th>Email</th>
-                        <th>Courses</th>
+                        <th>Options</th>
                     </tr>
                 </thead>
                 <tbody>
