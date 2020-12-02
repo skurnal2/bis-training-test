@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Button } from "react-bootstrap";
+import { FaBookOpen, FaTrash } from "react-icons/fa";
 import Course from './Course';
 
-const User = ({ value }) => {
+const User = ({ usersData, value }) => {
     
     const [course, setCourse] = useState({});
     const [loadingCourse, setLoadingCourse] = useState(true);
@@ -25,6 +26,11 @@ const User = ({ value }) => {
         }
         fetchCourseData();
     }
+
+    const deleteUser = (id) => {
+
+    }
+
     return (
         <>
         <tr>
@@ -34,8 +40,10 @@ const User = ({ value }) => {
             <td>{value.city}</td>
             <td>{value.address}</td>
             <td>{value.phone}</td>
+            <td>{value.email}</td>
             <td>                               
-                <Button variant="info" onClick={() => showCourses(value.id)}>Courses</Button>                
+                <Button variant="info" onClick={() => showCourses(value.id)}><FaBookOpen/> Courses</Button>     
+                <Button variant="danger" onClick={() => deleteUser(value.id)}><FaTrash/> Delete</Button>                
             </td>
         </tr>
         {!loadingCourse && <Course handleClose={handleClose} show={show} name={value.name} course={course}/>}

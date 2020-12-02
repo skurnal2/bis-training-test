@@ -1,10 +1,10 @@
 import User from './User';
 import {Table} from 'react-bootstrap';
 
-const UsersList = ({ users }) => {
+const UsersList = ({ usersData }) => {
     return (
         <div className="users-list">
-            <Table striped bordered hover  variant="light">
+            <Table striped bordered hover variant="light">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -13,13 +13,14 @@ const UsersList = ({ users }) => {
                         <th>City</th>
                         <th>Address</th>
                         <th>Phone</th>
+                        <th>Email</th>
                         <th>Courses</th>
                     </tr>
                 </thead>
                 <tbody>
                     {
-                        users.map((user, key) => (
-                            <User key={key} value={user} />
+                        usersData.users.map((user, key) => (
+                            <User usersData={usersData} key={key} value={user} />
                         ))
                     }
                 </tbody>

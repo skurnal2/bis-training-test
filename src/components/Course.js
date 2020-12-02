@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { FaLink } from "react-icons/fa";
 import { Modal, Table } from 'react-bootstrap';
 
 const Course = ({ handleClose, show, name, course }) => {
@@ -27,7 +28,7 @@ const Course = ({ handleClose, show, name, course }) => {
                         courseClass.marks >= courseClass.passmarks ?
                             <tr key={index}>
                                 <td>
-                                    <a className="btn btn-primary" href={courseClass.certificate}>{courseClass.certificate}</a>
+                                    <a className="btn btn-dark" href={`http://${courseClass.certificate}`}><FaLink/></a>
                                 </td>
                                 <td>{courseClass.passmarks}</td>
                                 <td>{courseClass.classname}</td>
@@ -36,9 +37,9 @@ const Course = ({ handleClose, show, name, course }) => {
                                 <td>{courseClass.classcode}</td>
                             </tr>
                             :
-                            <tr key={index} style={{ backgroundColor: "#EF5350" }}>
+                            <tr key={index} style={{ backgroundColor: "#e57373" }}>
                                 <td>
-                                    <a className="btn btn-primary" href={courseClass.certificate}>{courseClass.certificate}</a>
+                                <a className="btn btn-dark" href={`http://${courseClass.certificate}`}><FaLink/></a>
                                 </td>
                                 <td>{courseClass.passmarks}</td>
                                 <td>{courseClass.classname}</td>
