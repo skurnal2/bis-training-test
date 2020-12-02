@@ -1,21 +1,19 @@
 import { useState, useEffect } from 'react';
 import { Modal } from 'react-bootstrap';
-import { UsersDataContext } from '../App';
-import { Form, Col, Button } from 'react-bootstrap';
 import { ValidateEmail, ValidatePhone } from './Tools';
+import { Form, Col, Button } from 'react-bootstrap';
 
-const Update = ({ handleClose, show, user }) => {
-
+const Add = ( {usersApiData, setUsersApiData, handleClose, show} ) => {
     //Initializing user info with values of user passed as props
     const [userInfo, setUserInfo] = useState({
-        role: user.role,
-        city: user.city,
-        address: user.address,
-        phone: user.phone,
-        username: user.username,
-        id: user.id,
-        email: user.email,
-        name: user.name
+        role:'',
+        city:'',
+        address:'',
+        phone:'',
+        username:'',
+        id:'',
+        email:'',
+        name:''
     });
 
     const [errors, setErrors] = useState({
@@ -42,7 +40,7 @@ const Update = ({ handleClose, show, user }) => {
     }
 
     //For Validations
-    useEffect(() => {
+    useEffect(() => {        
         if (!userInfo.email) {
             errorSetter("emailError", "Please provide an Email ID");
         } else if (userInfo.email && !ValidateEmail(userInfo.email)) {
@@ -90,23 +88,19 @@ const Update = ({ handleClose, show, user }) => {
         }
     }, [userInfo])
 
-    const updateUser = (usersApiData, setUsersApiData) => {
-        if (!checkErrors()) {
-            if (window.confirm(`Are you sure you want to update User: ${user.name} (with Id: ${user.id})?`)) {
-                const newUsersList = [];
-                usersApiData.users.forEach(user => {
-                    if (user.id === userInfo.id) {
-                        newUsersList.push(userInfo);
-                    } else {
-                        newUsersList.push(user);
-                    }
-                });
+    const addUser = () => {   
+        //Extracting users array
+        const usersArray = usersApiData.users;                               
 
+        if (!checkErrors()) {
+            if (window.confirm(`Add User (Name: ${userInfo.name}) - Confirm`)) {
+                usersArray.push(userInfo); //This also pushes new object into the array
+                
                 const updatedUsersApiData = {
                     success: usersApiData.success,
-                    users: newUsersList
+                    users: usersArray
                 }
-                setUsersApiData(updatedUsersApiData);
+                setUsersApiData(updatedUsersApiData);                
                 handleClose();
             }
         } else {
@@ -114,26 +108,17 @@ const Update = ({ handleClose, show, user }) => {
         }
     }
 
-    return (
-        <UsersDataContext.Consumer>
-            {({ usersApiData, setUsersApiData }) => (
+    return (                    
                 <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Edit - {user.name} (Id: {user.id})</Modal.Title>
+                        <Modal.Title>Add a New User</Modal.Title>                        
                     </Modal.Header>
                     <Modal.Body>
                         <Form>
-                            <Form.Row>
-                                <Form.Group as={Col} controlId="formGridId">
-                                    <Form.Label>Id</Form.Label>
-                                    <Form.Control type="text" readOnly defaultValue={userInfo.id} onChange={e => setUserInfo(prevState => ({
-                                        ...prevState,
-                                        id: e.target.value
-                                    }))} />
-                                </Form.Group>
+                            <Form.Row>                                
                                 <Form.Group as={Col} controlId="formGridName">
                                     <Form.Label>Name</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter Name" defaultValue={userInfo.name} onChange={e => setUserInfo(prevState => ({
+                                    <Form.Control type="text" placeholder="Enter Name" onChange={e => setUserInfo(prevState => ({
                                         ...prevState,
                                         name: e.target.value
                                     }))} />
@@ -145,7 +130,7 @@ const Update = ({ handleClose, show, user }) => {
                             <Form.Row>
                                 <Form.Group as={Col} controlId="formGridUsername">
                                     <Form.Label>Username</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter Username" defaultValue={userInfo.username} onChange={e => setUserInfo(prevState => ({
+                                    <Form.Control type="text" placeholder="Enter Username" onChange={e => setUserInfo(prevState => ({
                                         ...prevState,
                                         username: e.target.value
                                     }))} />
@@ -155,7 +140,7 @@ const Update = ({ handleClose, show, user }) => {
                                 </Form.Group>
                                 <Form.Group as={Col} controlId="formGridEmail">
                                     <Form.Label>Email</Form.Label>
-                                    <Form.Control type="email" placeholder="Enter Email" defaultValue={userInfo.email} onChange={e => setUserInfo(prevState => ({
+                                    <Form.Control type="email" placeholder="Enter Email" onChange={e => setUserInfo(prevState => ({
                                         ...prevState,
                                         email: e.target.value
                                     }))} />
@@ -167,7 +152,7 @@ const Update = ({ handleClose, show, user }) => {
                             <Form.Row>
                                 <Form.Group as={Col} controlId="formGridPhone">
                                     <Form.Label>Phone Number</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter Phone Number" defaultValue={userInfo.phone} onChange={e => setUserInfo(prevState => ({
+                                    <Form.Control type="text" placeholder="Enter Phone Number" onChange={e => setUserInfo(prevState => ({
                                         ...prevState,
                                         phone: e.target.value
                                     }))} />
@@ -177,7 +162,7 @@ const Update = ({ handleClose, show, user }) => {
                                 </Form.Group>
                                 <Form.Group as={Col} controlId="formGridAddress">
                                     <Form.Label>Address</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter Address" defaultValue={userInfo.address} onChange={e => setUserInfo(prevState => ({
+                                    <Form.Control type="text" placeholder="Enter Address" onChange={e => setUserInfo(prevState => ({
                                         ...prevState,
                                         address: e.target.value
                                     }))} />
@@ -189,7 +174,7 @@ const Update = ({ handleClose, show, user }) => {
                             <Form.Row>
                                 <Form.Group as={Col} controlId="formGridCity">
                                     <Form.Label>City</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter City" defaultValue={userInfo.city} onChange={e => setUserInfo(prevState => ({
+                                    <Form.Control type="text" placeholder="Enter City" onChange={e => setUserInfo(prevState => ({
                                         ...prevState,
                                         city: e.target.value
                                     }))} />
@@ -199,7 +184,7 @@ const Update = ({ handleClose, show, user }) => {
                                 </Form.Group>
                                 <Form.Group as={Col} controlId="formGridRole">
                                     <Form.Label>Role</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter Role" defaultValue={userInfo.role} onChange={e => setUserInfo(prevState => ({
+                                    <Form.Control type="text" placeholder="Enter Role" onChange={e => setUserInfo(prevState => ({
                                         ...prevState,
                                         role: e.target.value
                                     }))} />
@@ -209,14 +194,12 @@ const Update = ({ handleClose, show, user }) => {
                                 </Form.Group>
                             </Form.Row>
                             <Form.Row>
-                                <Button variant="warning" onClick={() => updateUser(usersApiData, setUsersApiData)}>Update</Button>
+                                <Button variant="primary" onClick={() => addUser()}>Add</Button>
                             </Form.Row>
                         </Form>
                     </Modal.Body>
                 </Modal>
-            )}
-        </UsersDataContext.Consumer>
     );
 }
 
-export default Update;
+export default Add;

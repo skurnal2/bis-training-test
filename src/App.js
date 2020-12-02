@@ -29,7 +29,7 @@ const App = () => {
         <Header />
         <div className="app">
           <UsersDataContext.Provider value={{ usersApiData, setUsersApiData}}>
-            <UsersList usersData={usersApiData} />
+            <UsersList usersApiData={usersApiData} setUsersApiData={setUsersApiData} />
           </UsersDataContext.Provider>
         </div>
         <Footer />

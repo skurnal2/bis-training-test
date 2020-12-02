@@ -15,8 +15,7 @@ code {
 }
 
 .users-list {
-  margin: 2rem;
-  border: 1px solid rgba(61, 61, 61, 0.479);
+  margin: 2rem;  
 }
 
 td {
@@ -24,7 +23,12 @@ td {
 }
 
 .btn {
-  margin: 2px !important;
+  margin: 3px !important;
+}
+
+.add-button {
+  float: right;  
+  margin-bottom: 10px !important;
 }
 
 .modal-dialog {

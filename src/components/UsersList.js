@@ -1,9 +1,27 @@
+import { useState } from 'react';
 import User from './User';
-import {Table} from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
+import Add from './Add';
 
-const UsersList = ({ usersData }) => {
+const UsersList = ({ usersApiData, setUsersApiData }) => {
+
+    //Add Dialog Box    
+    const [loadingUserAdd, setLoadingUserAdd] = useState(true);
+
+    // -> Add
+    const [showAdd, setShowAdd] = useState(false);
+    const handleShowAdd = () => setShowAdd(true);
+    const handleCloseAdd = () => setShowAdd(false);    
+
+    const addNewUser = () => {
+        handleShowAdd();                
+        setLoadingUserAdd(false);
+    }
+
     return (
         <div className="users-list">
+            <Button variant="primary" className="add-button" onClick={() => addNewUser()}>Add New User</Button>
+            {(!loadingUserAdd) && <Add usersApiData={usersApiData} setUsersApiData={setUsersApiData} handleClose={handleCloseAdd} show={showAdd} />}
             <Table striped bordered hover variant="light">
                 <thead>
                     <tr>
@@ -19,7 +37,7 @@ const UsersList = ({ usersData }) => {
                 </thead>
                 <tbody>
                     {
-                        usersData.users.map((user, key) => (
+                        usersApiData.users.map((user, key) => (
                             <User key={key} value={user} />
                         ))
                     }
