@@ -7,7 +7,7 @@ const Header = () => {
             <header>
                 <img src={BisLogo} alt="BIS Training Solutions Logo" className="company-logo" />
             </header>
-            <div class="sub-heading">
+            <div className="sub-heading">
                 <h2><FaUserAlt/> Users List</h2>
             </div>
         </>

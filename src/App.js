@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import UsersList from './components/UsersList';
 import LoadingScreen from './components/LoadingScreen';
 import Header from './components/Header';
 import Footer from './components/Footer';
+
+export const UsersDataContext = React.createContext();
 
 const App = () => {
 
@@ -21,15 +23,17 @@ const App = () => {
     fetchUsersApiData();
   }, [])
 
-  return (    
-        loading ? <LoadingScreen /> :
-          <>
-            <Header />
-            <div className="app">
-              <UsersList usersData={usersApiData} />
-            </div>
-            <Footer />
-          </>          
+  return (
+    loading ? <LoadingScreen /> :
+      <>
+        <Header />
+        <div className="app">
+          <UsersDataContext.Provider value={{ usersApiData, setUsersApiData}}>
+            <UsersList usersData={usersApiData} />
+          </UsersDataContext.Provider>
+        </div>
+        <Footer />
+      </>
   );
 }
 

@@ -23,6 +23,10 @@ td {
   padding: 1rem;
 }
 
+.btn {
+  margin: 2px !important;
+}
+
 .modal-dialog {
   max-width: 80% !important;
 }
