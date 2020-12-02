@@ -46,7 +46,7 @@ td {
   border-radius: 10px 0 0 0;  
   background: linear-gradient(220deg, rgb(64, 62, 195) 0%, rgb(165, 14, 179) 100%);  
   padding: 1rem 2rem;
-  animation: radius-anim 10s infinite;  
+  animation: radius-anim 8s infinite;  
   color: rgba(255, 255, 255, 0.65);
   transition: .2s;
   margin: 1rem;

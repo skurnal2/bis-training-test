@@ -1,22 +1,33 @@
 import { useState } from "react";
 import { Button } from "react-bootstrap";
-import { FaBookOpen, FaTrash } from "react-icons/fa";
+import { FaBookOpen, FaTrash, FaUserEdit } from "react-icons/fa";
 import Course from './Course';
+import Update from './Update';
 
 import { UsersDataContext } from '../App';
 
-const User = ({ usersData, value }) => {
+const User = ({ value }) => {
 
+    //Course Dialog Box
     const [course, setCourse] = useState({});
     const [loadingCourse, setLoadingCourse] = useState(true);
 
+    //Update Dialog Box
+    const [user, setUser] = useState({});
+    const [loadingUserUpdate, setLoadingUserUpdate] = useState(true);
+
     //Modal States and functions
-    const [show, setShow] = useState(false);
-    const handleShow = () => setShow(true);
-    const handleClose = () => setShow(false);
+    // -> Course
+    const [showCourse, setShowCourse] = useState(false);
+    const handleShowCourse = () => setShowCourse(true);
+    const handleCloseCourse = () => setShowCourse(false);
+    // -> Update
+    const [showUpdate, setShowUpdate] = useState(false);
+    const handleShowUpdate = () => setShowUpdate(true);
+    const handleCloseUpdate = () => setShowUpdate(false);
 
     const showCourses = (id) => {
-        handleShow();
+        handleShowCourse();
 
         const fetchCourseData = async () => {
             setLoadingCourse(true);
@@ -41,6 +52,18 @@ const User = ({ usersData, value }) => {
         }
     }
 
+    const updateUser = (id, apiData) => {
+        //Getting the user using id
+        setUser(
+            apiData.users.filter((user) => {
+                return user.id === id;
+            })
+        );
+
+        handleShowUpdate();
+        setLoadingUserUpdate(false);
+    }
+
     return (
         <>
             <tr>
@@ -55,12 +78,16 @@ const User = ({ usersData, value }) => {
                     <Button variant="info" onClick={() => showCourses(value.id)}><FaBookOpen /> Courses</Button>
                     <UsersDataContext.Consumer>
                         {({ usersApiData, setUsersApiData }) => (
-                            <Button variant="danger" onClick={() => deleteUser(value.id, usersApiData, setUsersApiData)}><FaTrash /> Delete</Button>
+                            <>
+                                <Button variant="danger" onClick={() => deleteUser(value.id, usersApiData, setUsersApiData)}><FaTrash /> Delete</Button>
+                                <Button variant="warning" onClick={() => updateUser(value.id, usersApiData)}><FaUserEdit /> Edit</Button>
+                            </>
                         )}
                     </UsersDataContext.Consumer>
                 </td>
             </tr>
-            {!loadingCourse && <Course handleClose={handleClose} show={show} name={value.name} course={course} />}
+            {!loadingCourse && <Course handleClose={handleCloseCourse} show={showCourse} name={value.name} course={course} />}
+            {!loadingUserUpdate && <Update handleClose={handleCloseUpdate} show={showUpdate} user={user[0]}/>}
         </>
     );
 }

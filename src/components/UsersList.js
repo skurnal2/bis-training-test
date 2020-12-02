@@ -20,7 +20,7 @@ const UsersList = ({ usersData }) => {
                 <tbody>
                     {
                         usersData.users.map((user, key) => (
-                            <User usersData={usersData} key={key} value={user} />
+                            <User key={key} value={user} />
                         ))
                     }
                 </tbody>
